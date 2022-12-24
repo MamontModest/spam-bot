@@ -26,51 +26,18 @@ async def cmd_start(message: types.Message):
         text="Выбирай-всегда start возвращает на этот этап", reply_markup=builder
     )
 
+
+@dp.callback_query_handler(text='-1')
+async def cmd_start(callback: types.CallbackQuery):
+    await callback.message.answer("Введи сообщение - которое отправлять")
+
+
+
+
 @dp.callback_query_handler(text='1')
 async def cmd_start(callback: types.CallbackQuery):
-    builder = types.InlineKeyboardMarkup()
-    builder.add(types.InlineKeyboardButton(
-        text="Группу",
-        callback_data="11")
-    )
-    builder.add(types.InlineKeyboardButton(
-        text='Чат',
-        callback_data='12'))
-    await callback.message.answer(
-        "Туц", reply_markup=builder
-    )
-@dp.callback_query_handler(text='-1')
-
-async def cmd_start(callback: types.CallbackQuery):
-    builder = types.InlineKeyboardMarkup()
-    builder.add(types.InlineKeyboardButton(
-        text="Группу",
-        callback_data="-11")
-    )
-    builder.add(types.InlineKeyboardButton(
-        text='Чат',
-        callback_data='-12'))
-    await callback.message.answer(
-        "Туц", reply_markup=builder
-    )
-
-@dp.callback_query_handler(text='-11')
-async def cmd_start(callback: types.CallbackQuery):
-    await callback.message.answer("Введи сообщение - которое отправлять")
-
-@dp.callback_query_handler(text='-12')
-async def cmd_start(callback: types.CallbackQuery):
-    await callback.message.answer("Введи сообщение - которое отправлять")
-
-async def main():
-    await dp.start_polling(bot)
-
-
-
-@dp.callback_query_handler(text='12')
-async def cmd_start(callback: types.CallbackQuery):
     with open('status.txt', 'w') as inf:
-        inf.write('12')
+        inf.write('1')
     await callback.message.answer('Введи сылку')
 
 
@@ -78,14 +45,16 @@ async def cmd_start(callback: types.CallbackQuery):
 async def cmd_start(message: types.Message):
     with open('status.txt','r') as inf:
         status=inf.readline()
-    if status=='12':
+    if status=='1':
         con = sqlite3.connect("tutorial.db")
         cur = con.cursor()
         cur.execute("Insert into line values(?)",[message.text])
         con.commit()
         con.close()
-        time.sleep(10)
-        await message.answer(text='2131')
+        time.sleep(3)
+        with open('status.txt', 'w') as inf:
+            inf.write('None')
+        await message.answer_document(open('status.txt','rb'))
 
 
 
@@ -95,6 +64,8 @@ async def cmd_start(message: types.Message):
 
 
 
+async def main():
+    await dp.start_polling(bot)
 
 
 if __name__ == "__main__":
