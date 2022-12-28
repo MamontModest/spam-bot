@@ -18,7 +18,7 @@ from telethon.tl.types import InputPeerChannel ,InputUser , InputChannel
 from telethon.tl.functions.contacts import ResolveUsernameRequest
 
 spis=['modest72','weawmam']
-
+'''
 while True:
 	try:
 		otvet=set()
@@ -72,7 +72,7 @@ for i in spis[::-1]:
 
 
 
-'''
+
 for i in spis[::-1]:
 	chann = client.get_entity(a)
 	print(chann)
@@ -83,7 +83,7 @@ for i in spis[::-1]:
 	client(AddChatUserRequest(chann.id,user,1))
 	print('action completted')
 
-'''
+
 
 
 
@@ -135,7 +135,7 @@ while True:
 while True:
 	url = input('Ввуди сылку')
 	for i in client.get_messages(url,limit=10000):
-		print(client.get_entity(i.from_id).username)
+		print(client.get_entity(i.from_id).username)'''
 
 while True :
 	url=input('Ввуди сылку')

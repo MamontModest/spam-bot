@@ -40,25 +40,18 @@ def pars_chat(url:str):
         offset += 100
         time.sleep(1 + random.uniform(0, 2))
     print(url.split('/')[-1])
-    with open(url.split('/')[-1]+'.txt','w+') as inf:
+    with open(str(url.split('/')[-1])+'.txt','w+') as inf:
         for i in otvet:
-            inf.write(i+'\n')
-
-print(pars_chat("https://t.me/botalkaaa"))
+            inf.write(str(i)+'\n')
 
 
 
+def pars_cnahhel(url:str):
+    otvet=set()
+    for i in client.iter_messages(url,limit=1):
+        print(i.replises)
 
-
-
-def pars_channel(url:str):
-	for i in client.get_messages(url,limit=1):
-		if i.message:
-			print(i)
-			for j in i.replies.recent_repliers:
-				print(client.get_entity(j.user_id).username)
-
-
+pars_cnahhel('https://t.me/postypashki_old')
 
 
 
