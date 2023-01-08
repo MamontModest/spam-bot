@@ -16,9 +16,6 @@ client = TelegramClient(username, int(api_id), api_hash)
 client.start()
 
 
-con = sqlite3.connect("tutorial.db")
-cur = con.cursor()
-
 
 def pars_chat(url:str):
     otvet = set()
@@ -29,6 +26,7 @@ def pars_chat(url:str):
                           (chat_object.channel_id, ChannelParticipantsSearch(''), offset,
                            hash=chat_object.access_hash, limit=100)
                           )
+    print("парсим чат")
     for x in participants.users:
         otvet.add(x.username)
     while participants.users != []:
@@ -41,7 +39,6 @@ def pars_chat(url:str):
             otvet2.add(x.id)
         offset += 100
         time.sleep(1 + random.uniform(0, 5))
-    print(url.split('/')[-1])
     with open(str(url.split('/')[-1])+'.txt','w+') as inf:
         for i in otvet:
             inf.write(str(i)+'\n')
@@ -51,9 +48,14 @@ def pars_chat(url:str):
     if ceil[-1][0]=='+':
         client(LeaveChannelRequest(chat_object.channel_id))
 
+
+
+
+
 def pars_channel(url):
     otvet=set()
     chat_object = client.get_input_entity(url)
+    print("парсим канал")
     for i in client.get_messages(url, limit=1000):
         try:
             if i.replies.recent_repliers!=None:
@@ -70,30 +72,44 @@ def pars_channel(url):
     if ceil[-1][0]=='+':
         client(LeaveChannelRequest(chat_object.channel_id))
 
+
+
+
+
 flag=True
 while flag==True:
+    con = sqlite3.connect("tutorial.db")
+    cur = con.cursor()
     cur.execute("select * from line ")
     objects=cur.fetchall()
-    try:
+    print(objects)
+    if len(objects)!=0:
         url=objects[0][0]
         ceil = url.split('/')
         if ceil[-1][0] == '+':
             client(messages.ImportChatInviteRequest(ceil[-1][1:]))
         try:
             pars_chat(url)
+            cur.execute('delete from line')
+            con.commit()
+            con.close()
         except:
             pars_channel(url)
-        time.sleep(10)
-    except:
-        print('error')
-        time.sleep(10)
+            cur.execute('delete from line')
+            con.commit()
+            con.close()
+        time.sleep(20)
 
-
-#print(pars_chat('https://t.me/pokerton_chat_ru')) #ok
-#print(pars_chat('https://t.me/+AJrO31DXmRUwNWRi')) #ok
-#print(pars_chat("https://t.me/pokerbabyshark")) #ok
-#print(pars_channel('https://t.me/mvpteam21')) #ok
-#print(pars_chat(""))
+    else:
+        print('нечего парсить ')
+        time.sleep(10)
+"""
+print(pars_chat('https://t.me/pokerton_chat_ru')) #ok
+print(pars_chat('https://t.me/+AJrO31DXmRUwNWRi')) #ok
+print(pars_chat("https://t.me/pokerbabyshark")) #ok
+print(pars_channel('https://t.me/mvpteam21')) #ok
+print(pars_chat(""))
+"""
 #print(pars_chat(""))
 #print(pars_chat(""))
 

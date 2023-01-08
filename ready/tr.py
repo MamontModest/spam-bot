@@ -14,10 +14,11 @@ import sqlite3
 
 con = sqlite3.connect("tutorial.db")
 cur = con.cursor()
-cur.execute("select * from line ")
+cur.execute("select *  from line")
 con.commit()
+
 objects=cur.fetchall()
-print(objects)
+print(len(objects),objects)
 
 
 

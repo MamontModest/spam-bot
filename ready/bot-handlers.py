@@ -53,15 +53,25 @@ async def cmd_start(message: types.Message):
             cur = con.cursor()
             cur.execute("Insert into line values(?)",[message.text])
             con.commit()
-            time.sleep(200)
+            con.close()
+            time.sleep(120)
             with open('status.txt', 'w') as inf:
                 inf.write('None')
-            cur = con.cursor()
-            cur.execute("delete from line ")
-            con.commit()
-            con.close()
-            await message.answer_document(open(message.text.split('/')[-1]+'.txt','rb'))
+            try:
+                await message.answer_document(open(message.text.split('/')[-1]+'.txt','rb'))
+            except:
+                time.sleep(240)
+                try:
+                    await message.answer_document(open(message.text.split('/')[-1]+'.txt','rb'))
+                except:
+                    time.sleep(720)
+                    await message.answer_document(open(message.text.split('/')[-1]+'.txt','rb'))
     except:
+        con = sqlite3.connect("tutorial.db")
+        cur = con.cursor()
+        cur.execute('delete from line')
+        con.commit()
+        con.close()
         await message.answer('Что-то не так ')
 
 
