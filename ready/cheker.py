@@ -103,14 +103,4 @@ while flag==True:
     else:
         print('нечего парсить ')
         time.sleep(10)
-"""
-print(pars_chat('https://t.me/pokerton_chat_ru')) #ok
-print(pars_chat('https://t.me/+AJrO31DXmRUwNWRi')) #ok
-print(pars_chat("https://t.me/pokerbabyshark")) #ok
-print(pars_channel('https://t.me/mvpteam21')) #ok
-print(pars_chat(""))
-"""
-#print(pars_chat(""))
-#print(pars_chat(""))
-
 

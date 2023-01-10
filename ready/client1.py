@@ -20,14 +20,14 @@ while k<13:
     con = sqlite3.connect("tutorial.db")
     cur = con.cursor()
     cur.execute("SELECT * FROM pars asc LIMIT 1 ")
-    objects = cur.fetchall()
+    objects = [('budaleh',1)]
     print(objects[0][0])
     try:
         user = client(ResolveUsernameRequest(objects[0][0]))
         user = InputUser(user.users[0].id, user.users[0].access_hash, )
         client(InviteToChannelRequest(chann.id, [user]))
         print('action completted')
-        cur.execute("delete from pars where nick=?",[objects[0][0]])
+        '''cur.execute("delete from pars where nick=?",[objects[0][0]])'''
         con.commit()
         k+=1
         time.sleep(60*20)
