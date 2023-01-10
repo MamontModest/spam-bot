@@ -4,6 +4,7 @@ import asyncio
 import sqlite3
 import time
 from telethon import TelegramClient
+import os
 
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token="5824231817:AAFPR3h9OpWU3UWEVyJ5FjxpyLeOZ7Rtm0w")
@@ -79,49 +80,58 @@ async def cmd_start(callback: types.CallbackQuery):
 
 @dp.message_handler()
 async def cmd_start(message: types.Message):
-    con = sqlite3.connect("tutorial.db")
-    cur = con.cursor()
-    cur.execute("select * from status where id=(?)", [message.from_user.id])
-    status=cur.fetchall()[0][1]
-
-
-    if status==1:
+    try:
         con = sqlite3.connect("tutorial.db")
         cur = con.cursor()
-        cur.execute("Insert into line values(?)",[message.text])
-        con.commit()
-        con.close()
-        await message.answer('первая попытка , ожидай 2 минуты ')
-        time.sleep(120)
-        try:
-            await message.answer_document(open(message.text.split('/')[-1]+'.txt','rb'))
-        except:
-            await message.answer('первая попытка , ожидай еще 4 минуты ')
-            time.sleep(240)
+        cur.execute("select * from status where id=(?)", [message.from_user.id])
+        status=cur.fetchall()[0][1]
+        if status==1:
+            con = sqlite3.connect("tutorial.db")
+            cur = con.cursor()
+            cur.execute("Insert into line values(?)",[message.text])
+            con.commit()
+            con.close()
+            await message.answer('первая попытка , ожидай 2 минуты ')
+            time.sleep(120)
             try:
                 await message.answer_document(open(message.text.split('/')[-1]+'.txt','rb'))
+                os.remove(message.text.split('/')[-1] + '.txt')
             except:
-                await message.answer('последняя  попытка , ожидай еще 12 минут ')
-                time.sleep(720)
-                await message.answer_document(open(message.text.split('/')[-1]+'.txt','rb'))
+                await message.answer('первая попытка , ожидай еще 4 минуты ')
+                time.sleep(240)
+                try:
+                    await message.answer_document(open(message.text.split('/')[-1]+'.txt','rb'))
+                    os.remove(message.text.split('/')[-1] + '.txt')
+                except:
+                    await message.answer('последняя  попытка , ожидай еще 12 минут ')
+                    time.sleep(720)
+                    await message.answer_document(open(message.text.split('/')[-1]+'.txt','rb'))
+                    os.remove(message.text.split('/')[-1] + '.txt')
 
 
-    elif status==-1:
+        elif status==-1:
+            con = sqlite3.connect("tutorial.db")
+            cur = con.cursor()
+            cur.execute('insert into  spam  values(?,?,0)', [message.from_user.id,message.text])
+            cur.execute('UPDATE status SET status=-10 WHERE id=(?)', [message.from_user.id])
+            con.commit()
+            await message.answer('Прошу ссылку на инвайт ')
+        elif status==-10:
+            con = sqlite3.connect("tutorial.db")
+            cur = con.cursor()
+            cur.execute('UPDATE spam SET tg_kanal=? WHERE id_user=?',[message.text,message.from_user.id])
+            con.commit()
+            cur.execute("select * from spam where id_user=(?)", [message.from_user.id])
+            objects=cur.fetchall()
+            await message.answer(text='Сообщение  :   '+objects[0][1])
+            await message.answer(text='Таргет-канал  :   ' + objects[0][2])
+    except:
         con = sqlite3.connect("tutorial.db")
         cur = con.cursor()
-        cur.execute('insert into  spam  values(?,?,0)', [message.from_user.id,message.text])
-        cur.execute('UPDATE status SET status=-10 WHERE id=(?)', [message.from_user.id])
+        cur.execute("delete from  line where tg_kanal=(?)", [message.text])
         con.commit()
-        await message.answer('Прошу ссылку на инвайт ')
-    elif status==-10:
-        con = sqlite3.connect("tutorial.db")
-        cur = con.cursor()
-        cur.execute('UPDATE spam SET tg_kanal=? WHERE id_user=?',[message.text,message.from_user.id])
-        con.commit()
-        cur.execute("select * from spam where id_user=(?)", [message.from_user.id])
-        objects=cur.fetchall()
-        await message.answer(text='Сообщение  :   '+objects[0][1])
-        await message.answer(text='Таргет-канал  :   ' + objects[0][2])
+        con.close()
+        await message.answer('Где-то возникла непредвиденная ошибка')
 
 
 

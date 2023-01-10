@@ -61,7 +61,7 @@ def pars_channel(url):
             if i.replies.recent_repliers!=None:
                 for j in i.replies.recent_repliers:
                     try:
-                        otvet.add(j.user_id)
+                        otvet.add(client.get_entity(j.user_id).username)
                     except:
                         pass
         except:
