@@ -37,6 +37,7 @@ async def cmd_start(message: types.Message):
 @dp.message_handler(commands=["statistick"])
 async def cmd_start(message: types.Message):
     await message.answer(text="Пока нихуя нет , завтра будет ссори)")
+
 @dp.message_handler(commands=["add_to_channel"])
 async def cmd_start(message: types.Message):
     con = sqlite3.connect("tutorial.db")
@@ -53,6 +54,14 @@ async def cmd_start(message: types.Message):
     cur.execute('UPDATE status SET status=1 WHERE id=(?)',[message.from_user.id])
     con.commit()
     await message.answer('Введи ссылку')
+
+@dp.message_handler(commands=["delete_invite_history"])
+async def cmd_start(message: types.Message):
+    con = sqlite3.connect("tutorial.db")
+    cur = con.cursor()
+    cur.execute('delete from pars  WHERE id_creatot=(?)',[message.from_user.id])
+    con.commit()
+    await message.answer('Очистили стек инвайтинга')
 
 
 
@@ -76,6 +85,23 @@ async def cmd_start(callback: types.CallbackQuery):
     cur.execute('UPDATE status SET status=1 WHERE id=(?)',[callback.from_user.id])
     con.commit()
     await callback.message.answer('Введи ссылку')
+
+@dp.message_handler(content_types=['document'])
+async def cmd_start(message: types.Message):
+    if message.document.file_name[-3:]=='txt':
+        await message.document.download(destination_file=message.document.file_name,make_dirs=True)
+        with open(message.document.file_name)as inf :
+            con = sqlite3.connect("tutorial.db")
+            cur = con.cursor()
+            cur.execute("select * from spam where id_user=(?)", [message.from_user.id])
+            object=cur.fetchall()
+            for line in inf:
+                cur.execute("insert into pars values(?,?,?,?)",[object[0][0],object[0][1],object[0][2],line.strip()])
+            con.commit()
+            await message.answer('Записал , ночью начнем работу'            )
+        os.remove(message.document.file_name)
+    else:
+        await message.answer('Принимаем файлы только расширения txt')
 
 
 @dp.message_handler()
@@ -125,6 +151,9 @@ async def cmd_start(message: types.Message):
             objects=cur.fetchall()
             await message.answer(text='Сообщение  :   '+objects[0][1])
             await message.answer(text='Таргет-канал  :   ' + objects[0][2])
+            await message.answer(text='Скидывай файл в формате txt')
+
+
     except:
         con = sqlite3.connect("tutorial.db")
         cur = con.cursor()

@@ -56,7 +56,7 @@ def pars_channel(url):
     otvet=set()
     chat_object = client.get_input_entity(url)
     print("парсим канал")
-    for i in client.get_messages(url, limit=1000):
+    for i in client.get_messages(url, limit=5000):
         try:
             if i.replies.recent_repliers!=None:
                 for j in i.replies.recent_repliers:
