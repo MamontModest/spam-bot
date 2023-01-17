@@ -6,12 +6,9 @@ from telethon.functions import messages
 from telethon.tl.types import ChannelParticipantsSearch
 import random
 import sqlite3
-
-config = configparser.ConfigParser()
-config.read("config.ini")
-api_id = config['Telegram']['api_id']
-api_hash = config['Telegram']['api_hash']
-username = config['Telegram']['username']
+api_id = '29151876'
+api_hash = '2215e64c91e092ae9b9c4a7eb24d6fd6'
+username = 'weawmam'
 client = TelegramClient(username, int(api_id), api_hash)
 client.start()
 
@@ -55,13 +52,13 @@ def pars_chat(url:str):
 def pars_channel(url):
     otvet=set()
     chat_object = client.get_input_entity(url)
-    print("парсим канал")
+    print("парсим канал",url)
     for i in client.get_messages(url, limit=5000):
         try:
             if i.replies.recent_repliers!=None:
                 for j in i.replies.recent_repliers:
                     try:
-                        otvet.add(client.get_entity(j.user_id).username)
+                        otvet.add(j.user_id)
                     except:
                         pass
         except:
