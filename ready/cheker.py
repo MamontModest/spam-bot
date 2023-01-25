@@ -33,14 +33,10 @@ def pars_chat(url:str):
                               )
         for x in participants.users:
             otvet.add(x.username)
-            otvet2.add(x.id)
         offset += 100
         time.sleep(1 + random.uniform(0, 5))
     with open(str(url.split('/')[-1])+'.txt','w+') as inf:
         for i in otvet:
-            inf.write(str(i)+'\n')
-    with open(str(url.split('/')[-1])+'2.txt','w+') as inf:
-        for i in otvet2:
             inf.write(str(i)+'\n')
     if ceil[-1][0]=='+':
         client(LeaveChannelRequest(chat_object.channel_id))
