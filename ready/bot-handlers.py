@@ -12,7 +12,7 @@ dp = Dispatcher(bot)
 
 @dp.message_handler(commands=["start"])
 async def cmd_start(message: types.Message):
-    if message.from_user.id in [3727766,1890767310,'1890767310','3727766']:
+    if message.from_user.id in ['302131629',302131629,3727766,1890767310,'1890767310','3727766']:
         builder = types.InlineKeyboardMarkup()
         con = sqlite3.connect("tutorial.db")
         cur = con.cursor()
@@ -40,14 +40,14 @@ async def cmd_start(message: types.Message):
         await message.answer('Пошел нахуй тебя не приглашали ')
 @dp.message_handler(commands=["statistick"])
 async def cmd_start(message: types.Message):
-    if message.from_user.id in [3727766, 1890767310, '1890767310', '3727766']:
+    if message.from_user.id in ['302131629',302131629,3727766, 1890767310, '1890767310', '3727766']:
         await message.answer(text="Пока нихуя нет , завтра будет ссори)")
     else:
         await message.answer('Пошел нахуй тебя не приглашали ')
 
 @dp.message_handler(commands=["add_to_channel"])
 async def cmd_start(message: types.Message):
-    if message.from_user.id in [3727766, 1890767310, '1890767310', '3727766']:
+    if message.from_user.id in ['302131629',302131629,3727766, 1890767310, '1890767310', '3727766']:
         con = sqlite3.connect("tutorial.db")
         cur = con.cursor()
         cur.execute("delete  from spam where id_user=(?)", [message.from_user.id])
@@ -59,7 +59,7 @@ async def cmd_start(message: types.Message):
         await message.answer('Пошел нахуй тебя не приглашали ')
 @dp.message_handler(commands=["pars_channel"])
 async def cmd_start(message: types.Message):
-    if message.from_user.id in [3727766, 1890767310, '1890767310', '3727766']:
+    if message.from_user.id in ['302131629',302131629,3727766, 1890767310, '1890767310', '3727766']:
         con = sqlite3.connect("tutorial.db")
         cur = con.cursor()
         cur.execute('UPDATE status SET status=1 WHERE id=(?)',[message.from_user.id])
@@ -71,7 +71,7 @@ async def cmd_start(message: types.Message):
 
 @dp.message_handler(commands=["delete_invite_history"])
 async def cmd_start(message: types.Message):
-    if message.from_user.id in [3727766, 1890767310, '1890767310', '3727766']:
+    if message.from_user.id in ['302131629',302131629,3727766, 1890767310, '1890767310', '3727766']:
         con = sqlite3.connect("tutorial.db")
         cur = con.cursor()
         cur.execute('delete from pars  WHERE id_creatot=(?)',[message.from_user.id])
@@ -82,7 +82,7 @@ async def cmd_start(message: types.Message):
         await message.answer('Пошел нахуй тебя не приглашали ')
 @dp.message_handler(commands=["invite_spisok"])
 async def cmd_start(message: types.Message):
-    if message.from_user.id in [3727766, 1890767310, '1890767310', '3727766']:
+    if message.from_user.id in ['302131629',302131629,3727766, 1890767310, '1890767310', '3727766']:
         con = sqlite3.connect("tutorial.db")
         cur = con.cursor()
         cur.execute('select * from pars  WHERE id_creatot=(?)',[message.from_user.id])
@@ -100,13 +100,13 @@ async def cmd_start(message: types.Message):
 
 @dp.callback_query_handler(text='stat')
 async def cmd_start(callback: types.CallbackQuery):
-    if callback.from_user.id in [3727766, 1890767310, '1890767310', '3727766']:
+    if callback.from_user.id in ['302131629',302131629,3727766, 1890767310, '1890767310', '3727766']:
         await callback.message.answer(text="Пока нихуя нет , завтра будет ссори)")
     else:
         await callback.message.answer('Пошел нахуй тебя не приглашали ')
 @dp.callback_query_handler(text='add')
 async def cmd_start(callback: types.CallbackQuery):
-    if callback.from_user.id in [3727766, 1890767310, '1890767310', '3727766']:
+    if callback.from_user.id in ['302131629',302131629,3727766, 1890767310, '1890767310', '3727766']:
         con = sqlite3.connect("tutorial.db")
         cur = con.cursor()
         cur.execute("delete  from spam where id_user=(?)", [callback.from_user.id])
@@ -119,7 +119,7 @@ async def cmd_start(callback: types.CallbackQuery):
 
 @dp.callback_query_handler(text='pars')
 async def cmd_start(callback: types.CallbackQuery):
-    if callback.from_user.id in [3727766, 1890767310, '1890767310', '3727766']:
+    if callback.from_user.id in ['302131629',302131629,3727766, 1890767310, '1890767310', '3727766']:
         con = sqlite3.connect("tutorial.db")
         cur = con.cursor()
         cur.execute('UPDATE status SET status=1 WHERE id=(?)',[callback.from_user.id])
@@ -130,7 +130,7 @@ async def cmd_start(callback: types.CallbackQuery):
 
 @dp.message_handler(content_types=['document'])
 async def cmd_start(message: types.Message):
-    if message.from_user.id in [3727766, 1890767310, '1890767310', '3727766']:
+    if message.from_user.id in ['302131629',302131629,3727766, 1890767310, '1890767310', '3727766']:
         if message.document.file_name[-3:]=='txt':
             await message.document.download(destination_file=message.document.file_name,make_dirs=True)
             with open(message.document.file_name)as inf :
@@ -151,7 +151,7 @@ async def cmd_start(message: types.Message):
 
 @dp.message_handler()
 async def cmd_start(message: types.Message):
-    if message.from_user.id in [3727766, 1890767310, '1890767310', '3727766']:
+    if message.from_user.id in ['302131629',302131629,3727766, 1890767310, '1890767310', '3727766']:
         try:
             con = sqlite3.connect("tutorial.db")
             cur = con.cursor()
