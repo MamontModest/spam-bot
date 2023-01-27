@@ -2,7 +2,7 @@ import sqlite3
 con = sqlite3.connect("tutorial.db")
 cur = con.cursor()
 try:
-    cur.execute("select * from spam")
+    cur.execute("select * from spam as limit 50")
     print(cur.fetchall())
 except:
     pass
