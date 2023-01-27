@@ -1,6 +1,8 @@
 import sqlite3
 con = sqlite3.connect("tutorial.db")
 cur = con.cursor()
+cur.execute('delete from pars where tg_kanal="https://t.me/odushee"')
+con.commit()
 try:
     cur.execute("select * from pars ask limit 10")
     print(cur.fetchall())
