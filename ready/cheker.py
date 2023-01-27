@@ -3,6 +3,8 @@ import time
 from telethon.sync import TelegramClient
 from telethon.tl.functions.channels import GetParticipantsRequest,JoinChannelRequest,LeaveChannelRequest
 from telethon.functions import messages
+from telethon.tl.functions.messages import GetHistoryRequest
+from telethon.tl.types import PeerChannel
 from telethon.tl.types import ChannelParticipantsSearch
 import random
 import sqlite3
@@ -13,7 +15,7 @@ client = TelegramClient(username, int(api_id), api_hash)
 client.start()
 
 
-
+ceil=[[1,2],[2,3],3,4,[5]]
 def pars_chat(url:str):
     otvet = set()
     otvet2=set()
@@ -47,16 +49,31 @@ def pars_chat(url:str):
 
 def pars_channel(url):
     otvet=set()
+    all_messages = []
+    offset_id = 0
+    limit = 100
+    total_messages = 0
+    total_count_limit = 0
     chat_object = client.get_input_entity(url)
-    print("парсим канал",url)
-    for i in client.get_messages(url, limit=5000):
+    history = client(GetHistoryRequest(
+        peer=url,
+        offset_id=offset_id,
+        offset_date=None,
+        add_offset=0,
+        limit=limit,
+        max_id=0,
+        min_id=0,
+        hash=0
+    ))
+    messages = history.messages
+    for message in messages:
         try:
-            if i.replies.recent_repliers!=None:
-                for j in i.replies.recent_repliers:
-                    try:
-                        otvet.add(j.user_id)
-                    except:
-                        pass
+            for message in client.iter_messages('todayismyanotherday', reply_to=message.id, reverse=True):
+                try:
+                    otvet.add(client.get_entity(message.from_id).username)
+                except:
+                    print(message)
+            time.sleep(0.1)
         except:
             pass
     with open(str(url.split('/')[-1])+'.txt','w+') as inf:
@@ -64,7 +81,6 @@ def pars_channel(url):
             inf.write(str(i)+'\n')
     if ceil[-1][0]=='+':
         client(LeaveChannelRequest(chat_object.channel_id))
-
 
 
 
