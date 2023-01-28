@@ -1,5 +1,5 @@
 import sqlite3
-con = sqlite3.connect("../tutorial.db")
+con = sqlite3.connect("tutorial.db")
 cur = con.cursor()
 cur.execute("insert into   acaunts values('79346694500','27640543','b4f06653f3454db6034dac3111905eaa','kolkoad','188.130.128.171')")
 cur.execute("insert into   acaunts values('79587600494','28623916','4be346a285b94c23a65f96141fc0ffaf','clients123dsa','188.130.128.171')")
