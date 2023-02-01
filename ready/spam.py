@@ -6,13 +6,16 @@ from telethon.tl.types import InputPeerChannel ,InputUser , InputChannel
 from telethon.tl.functions.contacts import ResolveUsernameRequest
 con = sqlite3.connect("tutorial.db")
 cur = con.cursor()
+accs=[]
+cur.execute("select * from acaunts")
+con.commit()
+for i in cur.fetchall():
+    accs.append(i)
 while True:
-    k = 0
-    cur.execute("select * from acaunts")
-    for i in cur.fetchall():
-        k += 1
-        if k<=5:
-            pass
+    k=0
+    for i in accs:
+        if k>5:
+            break
         else:
             try:
                 print(i,i[4])
@@ -29,27 +32,30 @@ while True:
 
                 }
                 phone=i[0]
-                client = TelegramClient(username, int(api_id), api_hash,proxy=proxy)
-                print('connect')
-                client.start(phone)
                 cur.execute("SELECT * FROM pars asc LIMIT 1 ")
                 objects = cur.fetchall()
-                client(JoinChannelRequest(objects[0][2]))
-                print('joined')
+                con.commit()
+
+                client = TelegramClient(username, int(api_id), api_hash, proxy=proxy)
+                client.start(phone)
                 chann = client.get_entity(objects[0][2])
                 user=client.get_entity(objects[0][3])
-                client(InviteToChannelRequest(chann.id, [user]))
+                client(InviteToChannelRequest(chann, [user]))
+                client.disconnect()
                 print('invite')
+
                 cur.execute("delete from pars where nick=?", [objects[0][3]])
                 cur.execute("insert into stata values(1,0)")
                 con.commit()
-                time.sleep(10)
+                time.sleep(2*60)
+
             except:
                 cur.execute("delete from pars where nick=?", [objects[0][3]])
                 cur.execute("insert into stata values(0,1)")
                 con.commit()
                 time.sleep(30)
-    time.sleep(60*60*2)
+
+    time.sleep(60*60)
 
 
 
