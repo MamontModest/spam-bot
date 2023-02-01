@@ -23,7 +23,6 @@ cur.execute("insert into   acaunts values('79587600807','13894654','bfa8bdc0e3a0
 cur.execute("insert into   acaunts values('79587600906','24220542','7511dd65d44c964e48939b01dec8b556','gskfgismmfs','185.181.244.190')")
 cur.execute("insert into   acaunts values('79915678602','27472245','2069b82088da9cffd1f5b757315ea0af','hfghfghdfgsg','185.181.244.190')")
 cur.execute("insert into   acaunts values('79809341733','25152860','eec604b78cf21f0ba9ca4a56c7ee07e0','fgsdsdsdf','188.130.128.171')")
-cur.execute("insert into   acaunts values('79809341751','20775856','783ae73f7cda186daa241cc434d13f41','dfgdgdfe','188.130.128.171')")
 
 
 con.commit()
