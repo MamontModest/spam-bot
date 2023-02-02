@@ -18,11 +18,17 @@ cur.execute("insert into   acaunts values('79912484309','18211331','ff767bad55e0
 cur.execute("insert into   acaunts values('79913929496','24158678','8d506001d6ac4c4b68e97dc0b0f2247a','dagfsgsg','109.248.205.82')")
 cur.execute("insert into   acaunts values('79915670820','21312944','9ec1577d80a3bad0cc82442cdf8ac64d','dasgfgdf','109.248.205.82')")
 '''
+cur.execute("insert into   acaunts values('79912164973','23567633','10056ac1034d0abdbd3a094de520ca86','wqefdfhtydh','185.181.244.190')")
 cur.execute("insert into   acaunts values('79809341730','23567633','10056ac1034d0abdbd3a094de520ca86','wqefdfhtydh','185.181.244.190')")
 cur.execute("insert into   acaunts values('79587600807','13894654','bfa8bdc0e3a08c19f7abde4db3945df1','dafghth','185.181.244.190')")
 cur.execute("insert into   acaunts values('79587600906','24220542','7511dd65d44c964e48939b01dec8b556','gskfgismmfs','185.181.244.190')")
 cur.execute("insert into   acaunts values('79915678602','27472245','2069b82088da9cffd1f5b757315ea0af','hfghfghdfgsg','185.181.244.190')")
 cur.execute("insert into   acaunts values('79809341733','25152860','eec604b78cf21f0ba9ca4a56c7ee07e0','fgsdsdsdf','188.130.128.171')")
-
+cur.execute("insert into   acaunts values('79912164977','25152860','eec604b78cf21f0ba9ca4a56c7ee07e0','fgsdsdsdf','188.130.128.171')")
+cur.execute("insert into   acaunts values('79912164983','25152860','eec604b78cf21f0ba9ca4a56c7ee07e0','fgsdsdsdf','188.130.128.171')")
+cur.execute("insert into   acaunts values('79912165114','25152860','2069b82088da9cffd1f5b757315ea0af','fgsdsdsdf','188.130.128.171')")
+cur.execute("insert into   acaunts values('79912165116','25152860','eec604b78cf21f0ba9ca4a56c7ee07e0','fgsdsdsdf','109.248.205.82')")
+cur.execute("insert into   acaunts values('79912165115','25152860','eec604b78cf21f0ba9ca4a56c7ee07e0','fgsdsdsdf','109.248.205.82')")
+cur.execute("insert into   acaunts values('79912165117','25152860','eec604b78cf21f0ba9ca4a56c7ee07e0','fgsdsdsdf','109.248.205.82')")
 
 con.commit()

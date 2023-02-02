@@ -14,7 +14,7 @@ for i in cur.fetchall():
 while True:
     k=0
     for i in accs:
-        if k>5:
+        if k>10:
             break
         else:
             try:
@@ -38,6 +38,8 @@ while True:
 
                 client = TelegramClient(username, int(api_id), api_hash, proxy=proxy)
                 client.start(phone)
+                client(JoinChannelRequest(client.get_entity(objects[0][2])))
+                print('add')
                 chann = client.get_entity(objects[0][2])
                 user=client.get_entity(objects[0][3])
                 client(InviteToChannelRequest(chann, [user]))
@@ -47,13 +49,18 @@ while True:
                 cur.execute("delete from pars where nick=?", [objects[0][3]])
                 cur.execute("insert into stata values(1,0)")
                 con.commit()
-                time.sleep(2*60)
+                time.sleep(0)
 
-            except:
                 cur.execute("delete from pars where nick=?", [objects[0][3]])
                 cur.execute("insert into stata values(0,1)")
                 con.commit()
                 time.sleep(30)
+            except:
+                cur.execute("delete from pars where nick=?", [objects[0][3]])
+                cur.execute("insert into stata values(1,0)")
+                con.commit()
+                time.sleep(10)
+
 
     time.sleep(60*60)
 
