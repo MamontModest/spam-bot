@@ -47,11 +47,6 @@ while True:
                 print('invite')
 
                 cur.execute("delete from pars where nick=?", [objects[0][3]])
-                cur.execute("insert into stata values(1,0)")
-                con.commit()
-                time.sleep(0)
-
-                cur.execute("delete from pars where nick=?", [objects[0][3]])
                 cur.execute("insert into stata values(0,1)")
                 con.commit()
                 time.sleep(30)
