@@ -50,8 +50,8 @@ def pars_chat(url:str):
 def pars_channel(url):
     otvet=set()
     all_messages = []
-    offset_id = 0
-    limit = 100
+    offset_id = 100
+    limit = 200
     total_messages = 0
     total_count_limit = 0
     chat_object = client.get_input_entity(url)

@@ -13,6 +13,7 @@ for i in cur.fetchall():
     accs.append(i)
 while True:
     k=0
+
     for i in accs:
         if k>10:
             break
@@ -35,7 +36,6 @@ while True:
                 cur.execute("SELECT * FROM pars asc LIMIT 1 ")
                 objects = cur.fetchall()
                 con.commit()
-
                 client = TelegramClient(username, int(api_id), api_hash, proxy=proxy)
                 client.start(phone)
                 client(JoinChannelRequest(client.get_entity(objects[0][2])))
@@ -51,10 +51,13 @@ while True:
                 con.commit()
                 time.sleep(30)
             except:
-                cur.execute("delete from pars where nick=?", [objects[0][3]])
-                cur.execute("insert into stata values(1,0)")
-                con.commit()
-                time.sleep(10)
+                try:
+                    cur.execute("delete from pars where nick=?", [objects[0][3]])
+                    cur.execute("insert into stata values(1,0)")
+                    con.commit()
+                    time.sleep(10)
+                except:
+                    pass
 
 
     time.sleep(60*60)
